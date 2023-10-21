@@ -1,0 +1,66 @@
+{% extends "index.html" %}
+
+{% block title %}My Workout Plans{% endblock %}
+
+
+
+{% block main %}
+<div class="container">
+<form class="card p-3 bg-light mt-3" action="/workouts" method="POST">
+  <div class="text-center mb-3">
+    <h4>View, Delete or Edit an existing workout</h4>
+<select name="wName" class="form-select mx-auto w-auto my-2">
+    <option selected disabled>Select a workout</option>
+    {% for name in names %}
+        <option value="{{ name.workout_name }}">{{ name.workout_name }}</option>
+      {% endfor %}
+  </select>
+  <button type="submit" class="btn btn-success">Search Workout</button>
+  </div>
+</form>
+</div>
+
+<div class="container-lg">
+{% for day in days %}
+<h4>{{ day.day }}</h4>
+<table class="table table-success table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Exercise</th>
+        <th scope="col">Weight(Kg)</th>
+        <th scope="col">Sets</th>
+        <th scope="col">Increment(Kg)</th>
+        <th scope="col">Lower Rep Range</th>
+        <th scope="col">Upper Rep Range</th>
+      </tr>
+    </thead>
+    <tbody>
+      <form onSubmit="return confirm('Are you sure you want to delete this workout?')" action="/delete" method="POST">
+        <button class="btn btn-success my-2" name="deleterequest" type="submit" value="{{ day.day }}">Delete</button>
+        <input name="delName" type="hidden" value="{{ selectedName }}">
+      </form>
+      <form action="/edit" method="POST">
+        <button class="btn btn-success my-2 mx-2" name="editRequest" type="submit" value="{{ day.day }}">Edit</button>
+        <input name="editName" type="hidden" value="{{ selectedName }}">
+      </form>
+        {% for row in info %}
+          {% if day.day in row.day %}
+      <tr>
+        <td>{{ row.exercise }}</td>
+        <td>{{ row.weight }}</td>
+        <td>{{ row.sets }}</td>
+        <td>{{ row.increment }}</td>
+        <td>{{ row.l_range }}</td>
+        <td>{{ row.u_range }}</td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endfor %}
+
+{% endblock %}
+
+
+
+</div>

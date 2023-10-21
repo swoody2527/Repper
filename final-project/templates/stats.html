@@ -1,0 +1,65 @@
+{% extends "index.html" %}
+
+{% block title %}Stats{% endblock %}
+
+
+
+{% block main %}
+
+
+
+<div class="container">
+    <form class="card p-3 bg-light mt-3" action="/stats" method="POST">
+      <div class="text-center mb-3">
+        <h4>View workout history</h4>
+    <select required name="wName" class="form-select mx-auto w-auto my-2">
+        <option selected disabled>Select a workout</option>
+        {% for name in names %}
+            <option value="{{ name.workout_name }}">{{ name.workout_name }}</option>
+          {% endfor %}
+      </select>
+      <select required name="wDay" class="form-select mx-auto w-auto my-2">
+        <option selected disabled>Select a day</option>
+        {% for day in days %}
+        <option value="{{ day }}">{{ day }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="btn btn-success">Search Workout</button>
+      </div>
+    </form>
+    </div>
+
+
+
+<div class="container-lg">
+    {% if info %}
+    <h4>{{ selectedDay }}'s workouts for {{ selectedName }}</h4>
+    {% for date in dates %}
+    <p>{{ date.date }}</p>
+    <table class="table table-success table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Exercise</th>
+            <th scope="col">Weight(Kg)</th>
+            <th scope="col">Sets</th>
+            <th scope="col">Reps Achieved</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for row in info %}
+            {% if date.date in row.date %}
+          <tr>
+            <td>{{ row.exercise }}</td>
+            <td>{{ row.weight }}</td>
+            <td>{{ row.set_ }}</td>
+            <td>{{ row.reps_achieved }}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endfor %}
+      {% endif %}
+
+
+{% endblock %}

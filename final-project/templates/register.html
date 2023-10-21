@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <form class="card p-3 bg-light mt-3" action="/register" method="post">
+      <h2 class="text-center my-3">Register for an account</h2>
+        <div class="text-center mb-3">
+            <label class="form-label">Username</label>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text" required>
+        </div>
+        <div class="text-center mb-3">
+            <label class="form-label">Password</label>
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password" required>
+        </div>
+        <div class="text-center">
+            <label class="form-label">Password Confirmation</label>
+            <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Confirm Password" type="password" required>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-success mt-3" type="submit">Register</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "index.html" %}
+
+{% block title %}Edit{% endblock %}
+
+
+
+{% block main %}
+
+<h4 class="text-center">Editing {{ day }}'s workout for {{ name }}</h4>
+
+<form action="/editconfirm" method="POST">
+<div class="container-lg">
+    <table class="table table-success table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Exercise</th>
+            <th scope="col">Weight(Kg)</th>
+            <th scope="col">Sets</th>
+            <th scope="col">Increment(Kg)</th>
+            <th scope="col">Lower Rep Range</th>
+            <th scope="col">Upper Rep Range</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for row in info %}
+          <tr>
+            <input name="day" type="hidden" value="{{ day }}">
+            <input name="name" type="hidden" value="{{ name }}">
+            <input type="hidden" name="ogExercise" value="{{ row.exercise }}">
+            <td><input required name="exercise" placeholder="{{ row.exercise }}" value="{{ row.exercise }}"></td>
+            <td><input required name="weight" placeholder="{{ row.weight }}" value="{{ row.weight }}"></td>
+            <td><input required name="sets" placeholder="{{ row.sets }}" value="{{ row.sets }}"></td>
+            <td><input required name="increment" placeholder="{{ row.increment }}" value="{{ row.increment }}"></td>
+            <td><input required name="lrange" placeholder="{{ row.l_range }}" value="{{ row.l_range }}"></td>
+            <td><input required name="urange" placeholder="{{ row.u_range }}" value="{{ row.u_range }}"></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button class="btn btn-success" type="submit">Confirm Edit</button>
+    </form>
+
+{% endblock %}

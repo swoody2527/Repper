@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Repper: {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Repper</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav me-auto">
+              {% if session["user_id"] %}
+              <li class="nav-item">
+                <a class="nav-link" href="/home">Home
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/stats">History</a>
+              </li>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/workoutadd">New Workout Plan/Add Exercise</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/workouts">View Workout Plans</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/workoutlog">Log A Workout</a>
+            </li>
+            </ul>
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="/logout">Logout
+                  </a>
+                </li>
+              </ul>
+              {% else %}
+              <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a href="/register" class="nav-link">Register</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <form autocomplete="off" action="/" method="POST" class="d-flex">
+          <input name="username" class="form-control me-sm-2" type="text" placeholder="Username">
+          <input name="password" class="form-control me-sm-2" type="password" placeholder="Password">
+          <button class="btn btn-secondary my-1 me-1 my-sm-0" type="submit">Login</button>
+        </form>
+        {% endif %}
+      </nav>
+      {% if get_flashed_messages() %}
+      <header>
+        {% for category, message in get_flashed_messages(with_categories=True) %}
+        <div class="alert alert-{{category}} mb-0 text-center" role="alert">{{ message }}</div>
+      {% endfor %}
+      </header>
+  {% endif %}
+
+
+</body>
+{% block main %}{% endblock %}
+
+</html>

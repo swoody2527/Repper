@@ -1,0 +1,54 @@
+{% extends "index.html" %}
+
+{% block title %}Logging{% endblock %}
+
+
+
+{% block main %}
+
+
+<H1>Logging</H1>
+<form action="/logging" method="POST">
+  <input type="hidden" name="name" value="{{ name }}">
+<div class="container-lg">
+    <h4>{{ day }}</h4>
+    <input type="hidden" name="day" value="{{ day }}">
+    <table class="table table-success table-striped table-hover">
+        <thead>
+          {% for row in info %}
+          <tr>
+            <th scope="col">Exercise</th>
+            <th scope="col">Weight(Kg)</th>
+            <th scope="col">Target To Beat</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            {% for i in range(row.sets) %}
+            <th>Set{{ i+1 }}</th>
+            <input type="hidden" name="set" value="set{{ i+1 }}">
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td name="exercise">{{ row.exercise }}</td>
+            <input type="hidden" name="exercise" value="{{ row.exercise }}">
+            <td>{{ row.weight }}</td>
+            <input type="hidden" name="{{ row.exercise }}weight" value="{{ row.weight }}">
+            {% for row2 in recentReps %}
+              {% if row.exercise in row2.exercise %}
+              <td>{{ row2.reps_achieved }}</td>
+              {% endif %}
+            {% endfor %}
+            <th scope="col"></th>
+            <th scope="col">Reps</th>
+            {% for i in range(row.sets) %}
+            <td><input type="number" class="form-control" name="{{ row.exercise }}Reps" required></td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button class="btn btn-success" type="submit">Log Workout</button>
+    </div>
+</form>
+{% endblock %}

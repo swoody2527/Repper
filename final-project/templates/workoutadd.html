@@ -1,0 +1,93 @@
+{% extends "index.html" %}
+{% block title %}Add A Workout Plan{% endblock %}
+{% block main %}
+<div class="container">
+    <form class="card p-3 bg-light mt-3" action="/workoutadd" method="post">
+        <h2 class="text-center my-3">Add a workout</h2>
+        <p class="text-center">Type a new name if adding a new workout, or select a workout from the dropdown if adding to an existing plan.</p>
+        <p class="text-center">Use the selection menu to choose which day to add to the plan. For rest/off days, skip to the following day.</p>
+        <div class="text-center mb-3">
+            <label class="form-label">Name</label>
+            <input autocomplete="off" class="form-control mx-auto w-auto" id="workoutname" name="workoutname" placeholder="Name" type="text">
+            <select name="workoutname2" class="form-select mt-3 mx-auto w-auto">
+              <option disabled selected>Choose from an existing workout</option>
+              {% for name in names %}
+              <option value="{{ name.workout_name }}">{{ name.workout_name }}</option>
+              {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-success mt-3">Submit</button>
+            <p class="text-center">Weight - this will be your starting wait for a given exercise.</p>
+            <p class="text-center">Increment - this will be how much the weight increases when you reach the top of your rep range.</p>
+            <p class="text-center">Lower and Upper Rep Range - lower being the minimum reps you should be achieving and upper being your target</p>
+        </div>
+        <select name="day" class="form-select form-select-lg mb-3">
+            <option selected disabled>Select workout day</option>
+            {% for day in days %}
+            <option value="{{ day }}">{{ day }}</option>
+            {% endfor %}
+        </select>
+        <h4><button id="exerbuttonM" type="button" class="btn btn-success">+ Exercise</button><button id="rmbtnM" class="btn btn-success ms-1" type="button">- Remove</button></h4>
+        <ul class="list-group" id="selectionM" name="exercises">
+        </ul>
+</div>
+</form>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+     var exRowBlock = '<div class="row g-2">' +
+        '<div class="col-md">' +
+          '<div class="form-floating">' +
+            ' <input name="exerName" type="text" class="form-control" id="floatingInputGrid"  value="Lat Pull Down/Bench Press" required>'+
+            '<label for="floatingInputGrid">Exercise Name</label>'+
+          '</div>'+
+        '</div>'+
+        '<div class="col-md">'+
+          '<div class="form-floating">'+
+           '<input name="exerWeight" type="number" min="1" class="form-control" id="floatingInputGrid" step="any" required>'+
+           '<label for="floatingInputGrid">Weight(Kg)</label>'+
+          '</div>'+
+        '</div>'+
+        '<div class="col-md">'+
+           '<div class="form-floating">'+
+             '<input name="exerInc" type="number" min="1" class="form-control" id="floatingInputGrid" step="any" required>'+
+             '<label for="floatingInputGrid">Increment(Kg)</label>'+
+           '</div>'+
+         '</div>'+
+         '<div class="col-md">'+
+           '<div class="form-floating">'+
+             '<input name="exerSets" type="number" min="1" class="form-control" id="floatingInputGrid" required>'+
+             '<label for="floatingInputGrid">Sets</label>'+
+           '</div>'+
+         '</div>'+
+         '<div class="col-md">'+
+           '<div class="form-floating">'+
+             '<input name="exerLRange" type="number" min="1" class="form-control" id="floatingInputGrid" required>'+
+             '<label for="floatingInputGrid">Lower Rep Range</label>'+
+           '</div>'+
+         '</div>'+
+         '<div class="col-md">'+
+           '<div class="form-floating">'+
+             '<input name="exerURange" type="number" min="2" class="form-control" id="floatingInputGrid" required>'+
+             '<label for="floatingInputGrid">Upper Rep Range</label>'+
+           '</div>'+
+         '</div>'+
+      '</div>';
+
+    // MONDAY
+
+    document.querySelector("#exerbuttonM").onclick = function() {
+    const myList = document.getElementById("selectionM");
+    let newListItem = document.createElement("li");
+    newListItem.classList.add("list-group-item");
+    newListItem.innerHTML = exRowBlock;
+    myList.appendChild(newListItem);
+    };
+
+    document.querySelector("#rmbtnM").onclick = function() {
+    const myList = document.getElementById("selectionM");
+    myList.removeChild(myList.firstElementChild)
+    }
+    });
+
+</script>
+{% endblock %}

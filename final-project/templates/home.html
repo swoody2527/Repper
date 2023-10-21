@@ -1,0 +1,111 @@
+{% extends "index.html" %}
+
+{% block title %}Home{% endblock %}
+
+
+
+{% block main %}
+<div class="container-sm">
+<h1 class="text-center">Welcome Back, {{ name }}</h1>
+
+<form action="/home" method="POST">
+  <div class="text-center mb-3">
+  <h4 class="text-center">Which workout are you currently running?</h4>
+  <select name="wName" class="form-select mx-auto w-auto my-2">
+    <option disabled selected>Select A Workout</option>
+    {% for name in workoutNames %}
+    <option value="{{ name.workout_name }}">{{ name.workout_name }}</option>
+    {% endfor %}
+  </select>
+  <button class="btn btn-success" type="submit">GO</button>
+</div>
+</form>
+
+{% if preDay %}
+<p class="text-center">Your last recorded workout was:</p>
+
+<h4>{{ preDay.day }}'s workout for {{ preDay.workout_name }}</h4>{{ preDate.date }}
+
+
+<table class="table table-success table-striped">
+    <thead>
+      <tr>
+        <th width="100" scope="col">Exercise</th>
+        <th width="100" scope="col">Weight</th>
+        <th width="100" scope="col">Sets</th>
+        <th width="100" scope="col">Reps Achieved</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for row in preWorkout %}
+        <tr>
+        <td>{{ row.exercise }}</td>
+        <td>{{ row.weight }}kg</td>
+        <td>{{ row.set_ }}</td>
+        <td>{{ row.reps_achieved }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+<p class="text-center">Your next workout is:</p>
+
+<h4>{{ nextDay }}'s workout for {{ nextName }}</h4>
+
+<table class="table table-success table-striped">
+    <thead>
+      <tr>
+        <th width="100" scope="col">Exercise</th>
+        <th width="100" scope="col">Weight</th>
+        <th width="100" scope="col">Sets</th>
+        <th width="100" scope="col">Lower Rep Range</th>
+        <th width="100" scope="col">Upper Rep Range</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for row in nextWorkout %}
+        <tr>
+        <td>{{ row.exercise }}</td>
+        <td>{{ row.weight }}kg</td>
+        <td>{{ row.sets }}</td>
+        <td>{{ row.l_range }}</td>
+        <td>{{ row.u_range }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+<p class="text-center">You've reached your goal reps for these exercises!</p>
+<p class="text-center">Use the update button to increment your weight.</p>
+<table class="table table-success table-striped">
+  <thead>
+    <tr>
+      <th width="100" scope="col">Exercise</th>
+      <th width="100" scope="col">Day</th>
+      <th width="100" scope="col">Current Weight</th>
+      <th width="100" scope="col">New Weight</th>
+      <th width="100" scope="col">Update</th>
+    </tr>
+  </thead>
+  <form action="/updateweight" method="POST">
+  <tbody>
+      {% for row in moveUps %}
+      <tr>
+      <td>{{ row.exercise }}</td>
+      <td>{{ row.day }}</td>
+      <td>{{ row.weight }}kg</td>
+      <td>{{ row.newweight }}kg  ({{ row.increment }}kg) <i class="bi bi-arrow-up"></i></td>
+      <td><button class="btn btn-success" name="update" value ="{{ row.exercise }}">Update</button>
+      <input type="hidden" name="updateDay" value="{{ row.day }}">
+      <input type="hidden" name="updateWorkout" value="{{ nextName }}">
+      <input type="hidden" name="updateWeight" value="{{ row.newweight }}">
+    </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</form>
+</table>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+
+{% block title %}Log A Workout{% endblock %}
+
+
+
+{% block main %}
+
+<div class="container">
+    <form class="card p-3 bg-light mt-3" action="/workoutlog" method="post">
+        <h2 class="text-center my-3">Log A Workout</h2>
+        <div class="text-center mb-3">
+            <select name="workoutname" class="form-select mt-3 mx-auto w-auto" required>
+              <option disabled selected>Choose from an existing workout</option>
+              {% for name in names %}
+              <option value="{{ name.workout_name }}">{{ name.workout_name }}</option>
+              {% endfor %}
+            </select>
+            <select name="day" class="form-select mt-3 mx-auto w-auto" required>
+              <option disabled selected>Choose the day</option>
+              {% for day in days %}
+              <option value="{{ day }}">{{ day }}</option>
+              {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-success mt-3">Submit</button>
+        </div>
+</div>
+</form>
+
+{% endblock %}
