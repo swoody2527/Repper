@@ -1,5 +1,4 @@
 # REPPER
-### Video Demo:  https://www.youtube.com/watch?v=X4oZyLlaXNA&ab_channel=SamWoodall
 ### Description:
 
 Repper: Your Fitness Tracker for Weightlifting Enthusiasts
